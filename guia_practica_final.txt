@@ -1,0 +1,80 @@
+====== INSTALACION APACHE SPARK ======
+1. Install java
+Check java version
+java -version
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+
+2. Install scala
+sudo apt-get install scala
+try the shell
+scala
+println("Hello World")
+:q
+
+3. Install python
+sudo apt-get install python-pip
+pip install kafka-python
+pip install tweepy
+pip install configparser
+
+4. Spark
+sudo mkdir /home/bigdata
+sudo mkdir /home/bigdata/spark
+sudo chmod 777 -R /home/bigdata/
+wget http://apache.rediris.es/spark/spark-2.0.2/spark-2.0.2-bin-hadoop2.7.tgz
+tar xvf spark-2.0.2-bin-hadoop2.7.tgz
+sudo mv  spark-2.0.2-bin-hadoop2.7/* /home/bigdata/spark
+vi ~/.bashrc
+	#SPARK VARIABLES START
+	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+	export SPARK_HOME=/home/bigdata/spark
+	export PATH=$PATH:$SPARK_HOME/bin
+	export PATH=$PATH:$SPARK_HOME/sbin
+	#SPARK VARIABLES END
+source ~/.bashrc
+$SPARK_HOME
+spark-shell
+====== INSTALACION ZOOKEEPER ======
+1. Install Zookeeper
+wget http://apache.rediris.es/zookeeper/stable/zookeeper-3.4.10.tar.gz
+tar -xvf zookeeper-3.4.10.tar.gz
+cd zookeeper-3.4.10
+cp conf/zoo_sample.cfg conf/zoo.config
+====== INSTALACION APACHE KAFKA ======
+1. Install Kafka
+wget http://apache.rediris.es/kafka/1.0.0/kafka_2.11-1.0.0.tgz
+tar -xvf kafka_2.11-1.0.0.tgz
+##################################################################################################################################################
+====== PROJECT SETUP ======
+1. Start zookeper
+bin/zkServer.sh start
+
+#bin/zookeeper-server-start.sh config/zookeeper.properties
+
+3. Start kafka
+bin/kafka-server-start.sh config/server.properties
+
+4. Create topic 'twitterstream' in kafka
+bin/kafka-topics.sh --zookeeper localhost:2181 --list
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --partitions 1 --topic twitterstream --replication-factor 1
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --partitions 1 --topic trump --replication-factor 1
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --partitions 1 --topic test1 --replication-factor 1
+Para añadir manualmente a un topic
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test1
+bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic your_topic_name
+
+
+5. Upload data to kafka
+python bmc.py
+
+6. Check data is loading in Kafka
+bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic twitterstream --from-beginning
+
+7. Run Spark Analysis Program
+$SPARK_HOME/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka_2.10:1.5.1 twitterStream.py
+apt-get install python-tk
+
+$SPARK_HOME/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.1.0 twitterStream.py
+$SPARK_HOME/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.1.0 sparkstreamingwordcountkafka.py localhost:9092 trump
+$SPARK_HOME/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.1.0 sparkstreamingwordcountkafka.py
