@@ -25,7 +25,7 @@ sudo chmod 777 -R /home/bigdata/
 wget http://apache.rediris.es/spark/spark-2.0.2/spark-2.0.2-bin-hadoop2.7.tgz
 tar xvf spark-2.0.2-bin-hadoop2.7.tgz
 sudo mv  spark-2.0.2-bin-hadoop2.7/* /home/bigdata/spark
-vi ~/.bashrc
+nano ~/.bashrc
 	#SPARK VARIABLES START
 	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 	export SPARK_HOME=/home/bigdata/spark
@@ -40,7 +40,7 @@ spark-shell
 wget http://apache.rediris.es/zookeeper/stable/zookeeper-3.4.10.tar.gz
 tar -xvf zookeeper-3.4.10.tar.gz
 cd zookeeper-3.4.10
-cp conf/zoo_sample.cfg conf/zoo.config
+cp conf/zoo_sample.cfg conf/zoo.cfg
 ====== INSTALACION APACHE KAFKA ======
 1. Install Kafka
 wget http://apache.rediris.es/kafka/1.0.0/kafka_2.11-1.0.0.tgz
